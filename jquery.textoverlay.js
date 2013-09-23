@@ -46,6 +46,38 @@
     }
   })();
 
+  var entityMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#x27;',
+    '/': '&#x2F;'
+  }
+
+  var entityRegexe = /[&<>"'\/]/g
+
+  /**
+   * Function for escaping strings to HTML interpolation.
+   */
+  var escape = function (str) {
+    return str.replace(entityRegexe, function (match) {
+      return entityMap[match];
+    })
+  };
+
+  /**
+   * Determine if the array contains a given value.
+   */
+  var include = function (array, value) {
+    var i, l;
+    if (array.indexOf) return array.indexOf(value) != -1;
+    for (i = 0, l = array.length; i < l; i++) {
+      if (array[i] === value) return true;
+    }
+    return false;
+  };
+
   var Overlay = (function () {
 
     var html, css, textareaToWrapper, textareaToOverlay;

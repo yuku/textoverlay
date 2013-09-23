@@ -95,25 +95,22 @@
       overlay: {
         position: 'absolute',
         overflow: 'hidden',
+        color: 'transparent',
         'white-space': 'pre-wrap',
         'word-wrap': 'break-word'
       },
       textarea: {
         background: 'transparent',
         position: 'relative',
-        outline: 0,
-        color: 'transparent'
+        outline: 0
       }
     };
 
     // CSS properties transport from textarea to wrapper
     textareaToWrapper = ['display'];
     // CSS properties transport from textarea to overlay
-    textareaToOverlay = ['margin', 'padding', 'color', 'font-family',
-      'font-weight', 'font-size', 'background'];
-
-    allowedProps = ['background-color', 'color', 'text-decoration',
-      'font-style'];
+    textareaToOverlay = ['margin', 'padding', 'font-family', 'font-weight',
+      'font-size', 'background'];
 
     function Overlay($textarea, strategies) {
       var $wrapper, position;
@@ -153,6 +150,8 @@
 
       // Strategies must be an array
       this.strategies = $.isArray(strategies) ? strategies : [strategies];
+
+      this.renderTextOnOverlay();
     }
 
     $.extend(Overlay.prototype, {
@@ -170,11 +169,11 @@
       },
 
       renderTextOnOverlay: function () {
-        var text, i, strategy, match, style;
+        var text, i, l, strategy, match, style;
         text = escape(this.$textarea.val());
 
         // Apply all strategies
-        for (i = this.strategies.length - 1; i >= 0; i--) {
+        for (i = 0, l = this.strategies.length; i < l; i++) {
           strategy = this.strategies[i];
           match = strategy.match;
           if ($.isArray(match)) {
@@ -185,9 +184,7 @@
           }
 
           // Style attribute's string
-          style = $.map(strategy.css, function (val, prop) {
-            return include(allowedProps, prop) ? prop + ':' + val : '';
-          }).join(';');
+          style = 'background-color:' + strategy.css['background-color'];
 
           text = text.replace(match, function (str) {
             return '<span style="' + style + '">' + str + '</span>';

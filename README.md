@@ -42,6 +42,11 @@ cssObject = {
 };
 ```
 
+Todo
+----
+
+- Auto resizing textarea
+
 License
 -------
 

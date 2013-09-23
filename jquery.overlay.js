@@ -102,6 +102,7 @@
       textarea: {
         background: 'transparent',
         position: 'relative',
+        resize: 'none',
         outline: 0
       }
     };

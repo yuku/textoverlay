@@ -69,16 +69,18 @@
       textarea: {
         background: 'transparent',
         position: 'relative',
-        outline: 0
+        outline: 0,
+        color: 'transparent'
       }
     };
 
     // CSS properties transport from textarea to wrapper
-    textareaToWrapper = ['display', 'background'];
+    textareaToWrapper = ['display'];
     // CSS properties transport from textarea to overlay
-    textareaToOverlay = ['margin', 'padding'];
+    textareaToOverlay = ['margin', 'padding', 'color', 'font-family',
+      'font-weight', 'font-size', 'background'];
 
-    function Overlay($textarea) {
+    function Overlay($textarea, options) {
       var $wrapper, position;
 
       // Setup wrapper element
@@ -94,8 +96,8 @@
       this.$el = $(html.overlay).css(
         $.extend({}, css.overlay, getStyles($textarea, textareaToOverlay), {
           top: parseInt($textarea.css('border-top-width')),
-          bottom: 0, //parseInt($textarea.css('border-bottom-width')),
           right: parseInt($textarea.css('border-right-width')),
+          bottom: 4, //parseInt($textarea.css('border-bottom-width')),
           left: parseInt($textarea.css('border-left-width'))
         })
       );
@@ -105,7 +107,37 @@
 
       // Render wrapper and overlay
       this.$textarea.wrap($wrapper).before(this.$el);
+
+      // Intercept val method
+      // Note that jQuery.fn.val does not trigger any event.
+      this.$textarea.origVal = $textarea.val;
+      this.$textarea.val = bind(this.val, this);
+
+      // Bind event handlers
+      this.$textarea.on('input', bind(this.onInput, this));
     }
+
+    $.extend(Overlay.prototype, {
+      val: function (value) {
+        return value == null ? this.$textarea.origVal() : this.setVal(value);
+      },
+
+      setVal: function (value) {
+        this.$textarea.origVal(value);
+        return this.renderTextOnOverlay();
+      },
+
+      onInput: function (e) {
+        this.renderTextOnOverlay();
+      },
+
+      renderTextOnOverlay: function () {
+        var text = this.$textarea.val();
+        // TODO: markup specified words
+        this.$el.text(text);
+        return this;
+      }
+    });
 
     return Overlay;
 

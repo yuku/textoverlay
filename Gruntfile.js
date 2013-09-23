@@ -15,12 +15,12 @@ module.exports = function (grunt) {
         banner:
           '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
           '<%= grunt.template.today("yyyy-mm-dd") %> */',
-        sourceMap: 'jquery.textoverlay.min.map'
+        sourceMap: 'jquery.overlay.min.map'
       },
       all: {
         files: {
-          'jquery.textoverlay.min.js': [
-            'jquery.textoverlay.js'
+          'jquery.overlay.min.js': [
+            'jquery.overlay.js'
           ]
         }
       }

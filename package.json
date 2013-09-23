@@ -1,6 +1,6 @@
 {
   "author": "Yuku Takahashi <taka84u9@gmail.com>",
-  "name": "jquery-textoverlay",
+  "name": "jquery-overlay",
   "version": "0.0.1",
   "devDependencies": {
     "grunt": "~0.4.1",

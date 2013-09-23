@@ -31,23 +31,15 @@
 
             <h2>Demo</h2>
             <div>
-                <div>#textarea1</div>
                 <div>
-<textarea id="textarea1" class="input-xxlarge" rows="4">Hey @guys, 
+<textarea id="textarea1" class="input-xxlarge" rows="4">Hey @guys,
 All words starts with @ may be emphasized like @this.</textarea></div>
 <pre class="brush: js; script">
-$('#textarea1').overlay([
+$('textarea').overlay([
     {
         match: /\B@\w+/g,
         css: {
-            'background-color': '#d8dfea',
-            color: '#444'
-        }
-    },
-    {
-        match: 'emphasized',
-        css: {
-            'text-decoration': 'underline'
+            'background-color': '#d8dfea'
         }
     }
 ]);

@@ -1,6 +1,8 @@
 $(function () {
 
-  $('textarea').overlay({
-
+  $('.script').each(function () {
+    eval($(this).text());
   });
+
+  SyntaxHighlighter.all();
 });

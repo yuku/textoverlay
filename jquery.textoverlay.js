@@ -80,7 +80,7 @@
 
   var Overlay = (function () {
 
-    var html, css, textareaToWrapper, textareaToOverlay;
+    var html, css, textareaToWrapper, textareaToOverlay, allowedProps;
 
     html = {
       wrapper: '<div class="textoverlay-wrapper"></div>',
@@ -112,7 +112,10 @@
     textareaToOverlay = ['margin', 'padding', 'color', 'font-family',
       'font-weight', 'font-size', 'background'];
 
-    function Overlay($textarea, options) {
+    allowedProps = ['background-color', 'color', 'text-decoration',
+      'font-style'];
+
+    function Overlay($textarea, strategies) {
       var $wrapper, position;
 
       // Setup wrapper element
@@ -147,6 +150,9 @@
 
       // Bind event handlers
       this.$textarea.on('input', bind(this.onInput, this));
+
+      // Strategies must be an array
+      this.strategies = $.isArray(strategies) ? strategies : [strategies];
     }
 
     $.extend(Overlay.prototype, {
@@ -164,9 +170,30 @@
       },
 
       renderTextOnOverlay: function () {
-        var text = this.$textarea.val();
-        // TODO: markup specified words
-        this.$el.text(text);
+        var text, i, strategy, match, style;
+        text = escape(this.$textarea.val());
+
+        // Apply all strategies
+        for (i = this.strategies.length - 1; i >= 0; i--) {
+          strategy = this.strategies[i];
+          match = strategy.match;
+          if ($.isArray(match)) {
+            match = $.map(match, function (str) {
+              return str.replace(/(\(|\)|\|)/g, '\$1');
+            });
+            match = new RegExp('(' + match.join('|') + ')', 'g');
+          }
+
+          // Style attribute's string
+          style = $.map(strategy.css, function (val, prop) {
+            return include(allowedProps, prop) ? prop + ':' + val : '';
+          }).join(';');
+
+          text = text.replace(match, function (str) {
+            return '<span style="' + style + '">' + str + '</span>';
+          });
+        }
+        this.$el.html(text);
         return this;
       }
     });

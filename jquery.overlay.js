@@ -90,19 +90,19 @@
     css = {
       wrapper: {
         margin: 0,
-        padding: 0
+        padding: 0,
+        overflow: 'hidden'
       },
       overlay: {
         position: 'absolute',
-        overflow: 'hidden',
         color: 'transparent',
         'white-space': 'pre-wrap',
-        'word-wrap': 'break-word'
+        'word-wrap': 'break-word',
+        overflow: 'hidden'
       },
       textarea: {
         background: 'transparent',
         position: 'relative',
-        resize: 'none',
         outline: 0
       }
     };
@@ -126,11 +126,12 @@
       );
 
       // Setup overlay
+      this.textareaTop = parseInt($textarea.css('border-top-width'));
       this.$el = $(html.overlay).css(
         $.extend({}, css.overlay, getStyles($textarea, textareaToOverlay), {
-          top: parseInt($textarea.css('border-top-width')),
+          top: this.textareaTop,
           right: parseInt($textarea.css('border-right-width')),
-          bottom: 4, //parseInt($textarea.css('border-bottom-width')),
+          bottom: parseInt($textarea.css('border-bottom-width')),
           left: parseInt($textarea.css('border-left-width'))
         })
       );
@@ -148,6 +149,8 @@
 
       // Bind event handlers
       this.$textarea.on('input', bind(this.onInput, this));
+      this.$textarea.on('scroll', bind(this.resizeOverlay, this));
+      this.$textarea.on('resize', bind(this.resizeOverlay, this));
 
       // Strategies must be an array
       this.strategies = $.isArray(strategies) ? strategies : [strategies];
@@ -193,6 +196,10 @@
         }
         this.$el.html(text);
         return this;
+      },
+
+      resizeOverlay: function () {
+        this.$el.css({ top: this.textareaTop - this.$textarea.scrollTop() });
       }
     });
 

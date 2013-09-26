@@ -1,7 +1,7 @@
 Simple Decorator for Textarea
 =============================
 
-[Demo](http://yuku-t.com/jquery-textoverlay)
+[Demo](http://yuku-t.com/jquery-overlay)
 
 How to Use
 ----------

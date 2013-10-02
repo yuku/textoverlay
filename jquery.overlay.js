@@ -110,8 +110,20 @@
     // CSS properties transport from textarea to wrapper
     textareaToWrapper = ['display'];
     // CSS properties transport from textarea to overlay
-    textareaToOverlay = ['margin', 'padding', 'font-family', 'font-weight',
-      'font-size', 'background'];
+    textareaToOverlay = [
+      'margin-top',
+      'margin-right',
+      'margin-bottom',
+      'margin-left',
+      'padding-top',
+      'padding-right',
+      'padding-bottom',
+      'padding-left',
+      'font-family',
+      'font-weight',
+      'font-size',
+      'background-color'
+    ];
 
     function Overlay($textarea, strategies) {
       var $wrapper, position;
@@ -127,6 +139,7 @@
 
       // Setup overlay
       this.textareaTop = parseInt($textarea.css('border-top-width'));
+      console.log(getStyles($textarea, textareaToOverlay));
       this.$el = $(html.overlay).css(
         $.extend({}, css.overlay, getStyles($textarea, textareaToOverlay), {
           top: this.textareaTop,

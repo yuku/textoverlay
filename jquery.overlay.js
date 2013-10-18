@@ -139,7 +139,6 @@
 
       // Setup overlay
       this.textareaTop = parseInt($textarea.css('border-top-width'));
-      console.log(getStyles($textarea, textareaToOverlay));
       this.$el = $(html.overlay).css(
         $.extend({}, css.overlay, getStyles($textarea, textareaToOverlay), {
           top: this.textareaTop,
@@ -162,6 +161,7 @@
 
       // Bind event handlers
       this.$textarea.on('input', bind(this.onInput, this));
+      this.$textarea.on('change', bind(this.onInput, this));
       this.$textarea.on('scroll', bind(this.resizeOverlay, this));
       this.$textarea.on('resize', bind(this.resizeOverlay, this));
 

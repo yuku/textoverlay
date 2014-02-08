@@ -205,6 +205,15 @@
         strategies = $.isArray(strategies) ? strategies : [strategies];
         this.strategies = this.strategies.concat(strategies);
         return this.renderTextOnOverlay();
+      },
+
+      destroy: function () {
+        var $wrapper;
+        this.$textarea.off('.overlay');
+        $wrapper = this.$textarea.parent();
+        $wrapper.after(this.$textarea).remove();
+        this.$textarea.data('overlay', void 0);
+        this.$textarea = null;
       }
     });
 
@@ -215,6 +224,13 @@
   $.fn.overlay = function (strategies) {
     var dataKey;
     dataKey = 'overlay';
+
+    if (strategies === 'destroy') {
+      return this.each(function () {
+        var overlay = $(this).data(dataKey);
+        if (overlay) { overlay.destroy(); }
+      });
+    }
 
     return this.each(function () {
       var $this, overlay;

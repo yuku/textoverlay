@@ -178,7 +178,8 @@
 
       setVal: function (value) {
         this.$textarea.origVal(value);
-        return this.renderTextOnOverlay();
+        this.renderTextOnOverlay();
+        return this.$textarea;
       },
 
       onInput: function (e) {

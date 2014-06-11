@@ -226,7 +226,7 @@
         this.$textarea.off('.overlay');
         $wrapper = this.$textarea.parent();
         $wrapper.after(this.$textarea).remove();
-        this.$textarea.data('overlay', void 0);
+        this.$textarea.removeData('overlay');
         this.$textarea = null;
       }
     });

@@ -181,7 +181,7 @@
           match = strategy.match;
           if ($.isArray(match)) {
             match = $.map(match, function (str) {
-              return str.replace(/(\(|\)|\|)/g, '\$1');
+              return str.replace(/(\(|\)|\|)/g, '\\$1');
             });
             match = new RegExp('(' + match.join('|') + ')', 'g');
           }

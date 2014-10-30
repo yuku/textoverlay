@@ -47,9 +47,11 @@
    * Function for escaping strings to HTML interpolation.
    */
   var escape = function (str) {
-    return str.replace(entityRegexe, function (match) {
-      return entityMap[match];
-    })
+    if (typeof str !== 'undefined'){
+      return str.replace(entityRegexe, function (match) {
+        return entityMap[match];
+      })
+    }
   };
 
   /**

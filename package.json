@@ -1,6 +1,7 @@
 {
   "author": "Yuku Takahashi <taka84u9@gmail.com>",
   "name": "jquery-overlay",
+  "main": "jquery.overlay.js",
   "version": "0.0.4",
   "devDependencies": {
     "grunt": "~0.4.1",

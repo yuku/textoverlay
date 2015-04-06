@@ -1,0 +1,18 @@
+{
+  "name": "jquery.overlay",
+  "version": "0.0.4",
+  "homepage": "https://github.com/yuku-t/jquery-overlay",
+  "authors": [
+    "Ouadie BOUSSAID <ouadie.boussaid@gmail.com>"
+  ],
+  "description": "Simple Decorator for Textarea",
+  "main": "jquery.overlay.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

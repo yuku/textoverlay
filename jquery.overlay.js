@@ -174,7 +174,7 @@
       },
 
       renderTextOnOverlay: function () {
-        var text, i, l, strategy, match, style;
+        var text, i, l, strategy, match, style, klasses;
         text = $('<div></div>').text(this.$textarea.val());
 
         // Apply all strategies
@@ -183,14 +183,15 @@
           match = strategy.match;
           if ($.isArray(match)) {
             match = $.map(match, function (str) {
-              return str.replace(/(\(|\)|\|)/g, '\$1');
+              return str.replace(/(\(|\)|\|)/g, '\\$1');
             });
             match = new RegExp('(' + match.join('|') + ')', 'g');
           }
 
           // Style attribute's string
           style = 'background-color:' + strategy.css['background-color'];
-
+          klasses = strategy.klasses
+          
           text.contents().each(function () {
             var text, html, str, prevIndex;
             if (this.nodeType != Node.TEXT_NODE) return;
@@ -204,7 +205,7 @@
               }
               str = str[0];
               html += escape(text.substr(prevIndex, match.lastIndex - prevIndex - str.length));
-              html += '<span style="' + style + '">' + escape(str) + '</span>';
+              html += '<span ' + ((klasses && klasses.length != 0) ? ('class="' + klasses + '" ') : "") + 'style="' + style + '">' + escape(str) + '</span>';
             };
             if (prevIndex) $(this).replaceWith(html);
           });

@@ -1,3 +1,5 @@
+**DEPRECATED**: jquery-overlay is deprecated in favor of [textoverlay](https://github.com/yuku-t/textoverlay) project.
+
 # Simple Decorator for Textarea
 
 [Demo](http://yuku-t.com/jquery-overlay)
